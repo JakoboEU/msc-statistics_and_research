@@ -1,0 +1,138 @@
+---
+Date: 15/01/2019 
+Name: James Richardson
+Data: student weight and height from tiny made up survey
+Analysis: data exploration and plotting
+title: "Pratical 1"
+output: html_notebook
+---
+
+```{r}
+rm(list=ls())
+setwd("/Users/jamese.richardson/Projects/Masters/statistics_and_research/week1")
+list.files() 
+```
+
+
+```{r}
+student_data <- read.csv("students.csv")
+head(student_data)
+```
+
+```{r}
+# pupil is a sequence of numbers from 1 to 51, by increment of 1
+pupil<-seq(1,51,by=1)
+
+# scores is a vector formed by concatenating c() values
+scores<-c(20,25,19,34,25,18,36,37,43,29,26,33,31,49,50,29,48, 45,59,67,70,54,52,55,59,68,63,68,61,55,59,69,71,72,69,68,65,75,73,71,79,89,83,90,83,82,85,81,85,71,69)
+
+breakfast<-gl(3,17,51, labels = c("none", "muffin", "fry.up")) # breakfast is a factor with 3 # levels, each replicated 17 times (51 in total)
+# see help of functions to get a better understanding of how they work # copy and paste some of the examples provided in the help fileb
+
+df <- data.frame(cbind(pupil, scores, breakfast, student_data)) # combine all data
+
+df[df$breakfast=="fry.up", c("scores","pupil")]
+
+mean(df$scores)
+var(df$scores) 
+min(df$scores) 
+range(df$scores)
+```
+
+
+```{r}
+par(mfrow=c(1,2))
+plot(df$height~df$weight)
+plot(height~weight,data=df)
+```
+
+```{r}
+par(mfrow=c(1,2))
+boxplot(df$weight~df$breakfast)
+boxplot(df$scores~df$breakfast)
+```
+
+```{r}
+plot(weight~height,xlab="Student Height (m)", ylab="Student Weight (kg)", main=("Student weight as a function of height"), ylim=c(0,100), col=(breakfast), data=df)
+```
+
+
+```{r}
+# Let’s first plot the data points of muffin eaters in blue filled triangles
+plot(weight~height, xlab="Student Height (m)", ylab="Student Weight (kg)", main=("Student weight as a function of height"),
+col="blue", pch=17, ylim=c(60,100), xlim=c(1.5,2.2), data=df[df$breakfast=="muffin",])
+
+# We have subset the muffin eater from the data frame by this command: #data=df[df$breakfast=="muffin",]
+#now we can add the data points for another breakfast type in red filled circles points(weight~height, col="red", pch=16, data=df[df$breakfast=="fry.up",])
+```
+
+```{r}
+ # Let’s focus only on muffins eaters first by making a subset of the data with just muffin eaters: df.muffins<-df[df$breakfast=="muffin",]
+# Create mod1, an object that is going to contain the linear model of weight as function of height for the students that have muffins for breakfast
+mod1<-lm(weight~height, data=df[df$breakfast=="muffin",])
+
+# Plot the muffin points
+plot(weight~height, xlab="Student Height (m)", ylab="Student Weight (kg)",
+main=("Student weight as a function of height"), col="blue", pch=17, ylim=c(60,100), xlim=c(1.5,2.2), data=df[df$breakfast=="muffin",])
+# plot the line of the regression on the graph using function abline() abline(coef(mod1))
+# coef(mod1) gives the intercept and slope of the model calculated from df.muffins data frame. # you may want to have a line that is blue and wider
+abline(coef(mod1), lwd=2, col="blue")
+# now lets do the same for the fry.up eating students df.fry.up<-df[df$breakfast=="fry.up",] mod2<-lm(weight~height, data=df.fry.up)
+# add these objects to your existing plot by running the following code points(weight~height, col="red", pch=16, data=df[df$breakfast=="fry.up",]) abline(coef(mod2), lwd=2, col="red")
+
+mod2<-lm(weight~height, data=df[df$breakfast=="fry.up",])
+
+points(weight~height, xlab="Student Height (m)", col="red", pch=16, ylim=c(60,100), xlim=c(1.5,2.2), data=df[df$breakfast=="fry.up",])
+abline(coef(mod2), lwd=2, col="red")
+
+# You might also want to add a legend to your plot
+legend('topleft', c("Muffin", "Fry Up"), lty=1, col=c('blue', 'red'), bty='n', cex=1)
+```
+
+
+```{r}
+
+ # Save using pdf - first give a name to your plot 
+pdf("FirstRplot.pdf", width = 8, height = 6)
+
+# plot your data
+plot(weight~height, xlab="Student Height (m)", ylab="Student Weight (kg)", main=("Student weight as a function of height"), col="blue", pch=17, ylim=c(60,100), xlim=c(1.5,2.2), data=df[df$breakfast=="muffin",])
+abline(mod1, lwd=2, col="blue")
+points(weight~height, col="red", pch=16, data=df[df$breakfast=="fry.up",]) 
+abline(mod2, lwd=2, col="red")
+legend('topleft', c("Muffin", "Fry Up"), lty=1, col=c('blue', 'red'), bty='n', cex=1)
+# close the graphic window 
+dev.off()
+# You should now be able to look at the picture in your working directory, if you forgot where this is use getwd()
+```
+
+
+```{r}
+# save data frame as csv to open in excel
+write.csv(df, file = "students.2.csv", row.names = FALSE)
+```
+
+
+```{r}
+folder<- getwd()
+options(repos="http://cran.ma.imperial.ac.uk")
+install.packages("ggplot2", destdir=folder, lib=folder)
+# do not forget quotes 
+library(ggplot2,lib=folder) 
+# once the package is installed you still need to load # it using the command library()
+```
+
+```{r}
+ggplot(df, aes(x=weight, y=height, color=breakfast)) + geom_point(shape=1) +
+geom_smooth(method=lm, se=TRUE) + facet_grid(breakfast ~ .)
+```
+
+
+
+
+
+
+
+
+
+

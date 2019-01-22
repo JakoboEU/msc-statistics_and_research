@@ -1,0 +1,18 @@
+---
+Date: 22/01/2019 
+Name: James Richardson
+Data: student weight and height from tiny made up survey
+Analysis: Testing for differences Part 1
+title: "Pratical 2"
+output: html_notebook
+---
+
+```{r}
+# clear r console
+rm(list=ls())
+# set working directory
+setwd("/Users/jamese.richardson/Projects/Masters/statistics_and_research/week2")
+# list files in working directory
+list.files() 
+```
+
