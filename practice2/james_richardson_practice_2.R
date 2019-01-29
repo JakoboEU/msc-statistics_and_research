@@ -104,3 +104,13 @@ ggplot(wildebeest, aes(x=sex, y=horn, group=sex)) +
   labs(title = "Comparing Horn Length of Wildebeest", subtitle = "Males vs Females") +
   stat_summary(aes(label=..y..), fun.y=mean, geom="text", size=4, vjust=-0.9)
 dev.off() # close plotting element
+
+# --------------------------------
+# James Richardson	                              Score	  Notes
+# Hypothesis 	                                    1	      good clear hypothesis
+# Preliminary data exploration and visualisation 	2	      boxplot, histogram, mean and sd, very good
+# Testing the assumptions and reporting 	        2	 
+# Selection and carrying out correct test 	      1.5	    would also expect to see transformations attempted
+# Reporting your results and presenting the data 	2	      Report to sensible number of decimal places, use units in results statement, no test statistic given
+# Very nice script, well annotated and organised
+# Total 	8.5	 
