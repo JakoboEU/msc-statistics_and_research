@@ -1,7 +1,21 @@
 # Date: 22/01/2019 
 # Name: James Richardson
 # Data: Various
-# Analysis: Testing for differences Part 1
+# Analysis: Testing for differences Part 1: Comparing data with one categorical and one continuous variable
+
+#
+#
+# One categorical variable and One continuous variable
+# ----------------------------------------------------
+# 2 Groups?
+  # Yes -> Data Normal?
+    # No ->  ** Wilcoxon Rank test
+    # Yes -> Is data paired?
+      # Yes -> ** Paired t-test
+      # No -> ** Two sample independent t-test
+  # No -> Data Normal?
+    # Yes -> ** Anova
+    # No -> ** Kruskal-Wallis
 
 #########
 # Set up
@@ -151,6 +165,8 @@ dev.off() # close plotting element
 ###############
 # Paired t-test
 ###############
+# When comparing measurements taken from the same subject at two different times.
+
 # Data: Blood pressure (n=15 athletes)
 # Analysis: Paired t-test
 # Null Hypothesis: there is no improvement in blood pressure after exercise.
