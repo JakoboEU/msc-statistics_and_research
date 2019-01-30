@@ -399,5 +399,22 @@ title("Diet = 2")
 # and at what time during the exercise that you measure the pulse. 
 # This does get pretty complicated to interpret; we will not be testing 3-way Repeated Measures Anova in the quiz.
 
-all.aov <- aov(??????)
+# aov(pulse ~ diet * time + Error(id), data = exer)
+
+all.aov <- aov(pulse ~ diet * exertype * time + Error(id), data = exer)
 summary(all.aov)
+
+# Error: id
+#                 Df Sum Sq Mean Sq F value   Pr(>F)    
+# diet             1   1262    1262  14.524 0.000848 ***
+#   exertype       2   8326    4163  47.915 4.17e-09 ***
+#   diet:exertype  2    816     408   4.695 0.019023 *  
+#   Residuals     24   2085      87                     
+# 
+# Error: Within
+#                      Df Sum Sq Mean Sq F value   Pr(>F)    
+# time                  2 2066.6  1033.3  31.721 1.66e-09 ***
+#   diet:time           2  192.8    96.4   2.960  0.06137 .  
+# exertype:time         4 2723.3   680.8  20.900 4.99e-10 ***
+#   diet:exertype:time  4  613.6   153.4   4.709  0.00275 ** 
+#   Residuals          48 1563.6    32.6      
