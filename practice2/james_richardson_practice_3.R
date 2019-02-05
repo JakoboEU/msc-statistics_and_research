@@ -8,7 +8,7 @@
 # clear r console
 rm(list=ls())
 # set working directory
-setwd("/Users/jamese.richardson/Projects/Masters/statistics_and_research/practice3")
+setwd("/Users/jamese.richardson/Projects/Masters/statistics_and_research/practice2")
 # list files in working directory
 list.files() 
 
