@@ -198,3 +198,13 @@ ggplot(enrich.summary, aes(x=type, y=pacing)) +
   labs(title = "Pacing Behaviour of Lions based on Enrichment Treatment", 
        subtitle = "Treatment group (a) signicantly different to treatment group (b)")
 
+#-----------------------------------------------
+# James Richardson	                                Score	Notes
+# Hypothesis 	                                      1	    good clear hypothesis
+# Preliminary data exploration and visualisation 	  2	    excellent
+# Testing the assumptions and reporting 	          2	    nicely reported
+# Selection and carrying out correct test 	        2	 
+# Reporting your results and presenting the data 	  2.5	  Very good but not clear the purpose of the plot legend. 
+#                                                         Also, results statement needs to be written as a flowing statement. 
+
+# Total 	                                          9.5	 
