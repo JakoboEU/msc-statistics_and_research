@@ -364,6 +364,8 @@ ggplot(spermnum, aes(x=time, y=spermnum)) +
 plot(spermnum ~ time, data = spermnum)
 abline(LR1)
 
+plot(spermnum$spermnum ~ spermnum$time)
+abline(LR1)
 
 # Next week we will look at this in more detail and start using the model equation to predict values 
 # and also check the model validation. For now it is enough to understand
