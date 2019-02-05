@@ -208,3 +208,6 @@ ggplot(enrich.summary, aes(x=type, y=pacing)) +
 #                                                         Also, results statement needs to be written as a flowing statement. 
 
 # Total 	                                          9.5	 
+
+# For Tukey - just add letters to graph to show output from Tukey.  Add something in figure description to say what these letters mean.
+# Colours suggest that there is some meaning in the data between the groups.
