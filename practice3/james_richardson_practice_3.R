@@ -80,16 +80,16 @@ nrow(lichen_continuous) # [1] 177
 ########
 pairs(lichen_continuous)
 
-# Let's check which of the continous varibles follow a normal distribution
+# Let's check which of the continuous varibles follow a normal distribution
 ########
-# What do the distributions look like
+# What do the distributions look like?
 barplot(lichen$growth.rate)
 barplot(lichen$polution.index)
 barplot(lichen$NH3)
 barplot(lichen$bacteria)
 barplot(lichen$NOx)
 
-# Do shapiro test on all continuous variables
+# Do shapiro test on all continuous variables:
 lichen.shapiro.test <- sapply(lichen_continuous, FUN=shapiro.test)
 lichen.shapiro.test[2,]
 # $growth.rate
