@@ -88,7 +88,7 @@ cor.test(sheep_fitness$fitness, sheep_fitness$body.size, method="spearman")
 nrow(sheep_fitness)
 # [1] 50
 
-# So the fitness and body.size are significantly correlated (rho = 0.59, n = 50, p < 0.01)
+# So the fitness and body.size are significantly correlated (rho = 0.59, n = 50, p < 0.001)
 
 # Check for prediction
 # --------------------
@@ -102,13 +102,13 @@ sheep.model.lm <- lm(fitness~body.size, data=sheep_fitness)
 # Are residuals normally distributed?
 hist(sheep.model.lm$residuals)
 shapiro.test(sheep.model.lm$residuals) # W = 0.95188, p-value = 0.04079 
-# So residuals significantly different to normal - so Linear model okay.
+# So residuals NOT significantly different to normal - so Linear model okay.
 
 par(mfrow=c(2,2)) 
 plot(sheep.model.lm)
 # Q-Q Plot is a bit wacky - dots falling well off line at start and end.
 # Got outliers (4) approaching cookes distance
-# Slight bulge in both residuals
+# Slight bulge in both the predicted values
 
 summary(sheep.model.lm)
 # Call:
