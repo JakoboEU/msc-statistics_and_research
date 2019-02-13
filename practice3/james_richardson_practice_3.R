@@ -241,3 +241,12 @@ ggplot(lichen_continuous, aes(x=polution.index, y=growth.rate)) +
   ylab("Lichen growth rate (cm2/yr).") + 
   geom_point() + 
   stat_smooth(method = "lm", col = "red")
+
+#                                               Score	Notes
+# Testing correlations in data set	              2	 
+# Testing & reporting 3 strongest correlations	  3	 
+# Testing growth rate / pollution relationship	  2	 
+# Reporting results statement 	                  1.5	Missed half a mark for not reporting the direction of the relationship
+# Plot relationship with fitted line 	            1	 
+# Excellent script, very organised and correct methods used throughout 
+# Total 	                                        9.5
