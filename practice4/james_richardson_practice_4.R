@@ -178,3 +178,48 @@ ggplot(sheep_fitness, aes(x=body.size, y=fitness)) +
   ylab("Number of Offspring") + 
   geom_point() + 
   stat_smooth(method = "glm", col = "red", method.args = list(family = "poisson"))
+
+
+############################################################################################################################
+############################################################################################################################
+
+# Written Practice: Part 1
+###############################
+
+# a) For each figure write a sentence, suitable for a results section, that describes the contents of the figure. [2 marks]
+
+# Fig 1. Crop yield against canopy index (a measure of both diversity of shade trees and the amount of shade). 
+# Model statistics R2 = 0.58, p < 0.001, n = 164; intercept = 6.96399 slope = 0.76280.
+
+# Results statement:  The canopy index is a significant postive predictor of crop yield (R2 = 0.58, n = 164, p < 0.001)
+
+# Fig 2. Crop yield against the diversity of predatory arthropods sampled in sun and shade grown coffee plantations. 
+# Model statistics R2 = 0.07, p < 0.001, n = 164; intercept = 6.1383 slope = 0.4509.
+
+# Results statewment: The number of predatory arthropods is a significant postive predictor of crop yield (R2 = 0.07, p < 0.001, n = 164)
+
+# b) Using the model statistics in Fig 1, 
+# calculate what the crop yield would be when the canopy index is 10.57, give your answer to two decimal places. [1 mark]
+
+(10.57 * 0.76280) + 6.96399
+
+# [1] 15.02679 -> 15.03 tons
+
+# c) Briefly state the confidence you would place in the relationships in the figures below 
+# and why you think that this is the case. [2 marks
+
+# Fig 1: Reasonably positive:  Points generally close to line (R2 = 0.58)
+# Fig 2. Not positive: points very scattered from line (R2 = 0.07)
+
+# Written Practice: Part 2
+###############################
+
+# a) Write a sentence suitable for a results section that describes the findings of this model. [3 marks]
+
+# The canopy index was a signficant positive predictor (p < 0.001), the  number of arthropods was a positive predictor(p < 0.001) 
+# and the aridity was a significant negative predictor (p < 0.001) of the crop yield whereas the number of 
+# microbes was not found to be a significant predictor (p = 0.97) (df = 159, R2 = 0.73)
+
+# b) What would you do next if you got this output? Describe the procedures you would carry out next [2 marks]
+
+# Remove the number of microbes from the linear model and run again.
