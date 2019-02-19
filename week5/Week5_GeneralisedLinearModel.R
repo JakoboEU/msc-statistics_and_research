@@ -168,10 +168,10 @@ summary(herb.mod)
 # i.e. there is a significant relationship between the two variables. 
 # To write this up in a clear statement we first need to get a test statistic, 
 # for GLM’s we can use a pseudo-R2. To calculate this we need to use the following equation;
-#     Pseudo-R2 = (Null deviance-Residual deviance)/Null deviance
+#     Pseudo-R2 = (Null deviance - Residual deviance) / Null deviance
 # This value will vary between 0-1 with higher values meaning your model has greater explanatory power, 
 # just like R2 in a linear model. Write a clear results statement.
-192.55 / 752.28
+192.55 / 752.28 # <- this is wrong
 # [1] 0.2559552
 
 # ------------------
