@@ -289,7 +289,8 @@ cor(marsh[34:43])
 # Below we will again use the envfit function to look at the environmental data.
 
 # envfit: Environmental variables fitted to an ordination
-ef <- envfit(marsh.nmds, marsh[34:43], na.rm = TRUE, permu = 999) ef
+ef <- envfit(marsh.nmds, marsh[34:43], na.rm = TRUE, permu = 999) 
+ef
 # Plot the fitted vectors
 plot(marsh.nmds, display = "sites")
 plot(ef, p.max = 0.05)
