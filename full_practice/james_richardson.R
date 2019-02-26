@@ -2,6 +2,12 @@
 # Name: James Richardson
 # Student Number: 18057447
 
+# Shapiro–Wilk test
+# The null-hypothesis of this test is that the population is normally distributed.
+# for an alpha level of 0.05, a data set with a p-value of less than 0.05 
+# rejects the null hypothesis that the data are from a normally distributed population
+
+
 # Script Set Up
 # -------------
 # clear r console
@@ -54,8 +60,6 @@ head(insectSprays)
 
 str(insectSprays)
 
-v
-
 # Means
 tapply(insectSprays$count, insectSprays$spray, FUN=mean)
 #     A         B         C         D         E         F 
@@ -82,7 +86,19 @@ bartlett.test(insectSprays$count, insectSprays$spray)
 # Bartlett's K-squared = 25.96, df = 5, p-value = 9.085e-05
 # <- Significant difference in variance
 
-# Use Kruskal-Wallis
+shapiro.test(log10(insectSprays$count + 1))
+# W = 0.94608, p-value = 0.003874
+# <- Significantly different to normal
+
+shapiro.test(sqrt(insectSprays$count))
+# W = 0.96728, p-value = 0.05765
+# NOT Significantly different to normal
+bartlett.test(sqrt(insectSprays$count)~insectSprays$spray)
+# Bartlett's K-squared = 3.7525, df = 5, p-value = 0.5856
+# <- Not Significant difference in variance
+
+# Use Kruskal-Wallis on untransformed data
+# -----------------------------------------
 kruskal.test(spray~count, data = insectSprays) 
 # Kruskal-Wallis chi-squared = 43.357, df = 23, p-value = 0.006281
 
@@ -110,6 +126,22 @@ pairwise.wilcox.test(insectSprays$count,insectSprays$spray)
 ggplot(insectSprays, aes(x=spray, y=count)) + 
   geom_boxplot() +
   xlab("Spray") + ylab("Number of Insects")
+
+# Use ANOVA on transformed data
+# -----------------------------------------
+insectSprays$count.sqrt = sqrt(insectSprays$count)
+insectSprays$spray.factor = as.factor(insectSprays$spray)
+insectSprays.anova<-aov(count.sqrt~spray.factor, data=insectSprays)
+summary(insectSprays.anova) # significant difference between groups
+
+#             Df Sum Sq Mean Sq F value Pr(>F)    
+# spray        5  88.44  17.688    44.8 <2e-16 ***
+#  Residuals   66  26.06   0.395   
+
+library(multcomp)
+cld(glht(insectSprays.anova, linfct=mcp(spray.factor="Tukey")))
+#    A    B    C    D    E    F 
+#   "c"  "c"  "a"  "b" "ab"  "c" 
 
 #################
 # Section 2
@@ -145,6 +177,9 @@ ggplot(raccoon, aes(x=sex, y=weight)) +
 ggplot(raccoon, aes(x=pop, y=weight)) + 
   geom_boxplot() +
   xlab("Location") + ylab("Weight (lbs)")
+
+
+boxplot(raccoon$weight~raccoon$pop+raccoon$sex)
 
 # Mean by sex
 tapply(raccoon$weight, raccoon$sex, FUN=mean)
@@ -382,6 +417,15 @@ bodyfat <- read_csv("bodyfat.csv")
 #     forarm = col_double(),
 #     wrist = col_double()
 #   )
+library(car)
+scatterplotMatrix(~+age+weight+height+chest+hip+ankle, data=bodyfat,  diagonal=list(method="boxplot"))
+## hip is not very normally distributed so will try with a log transformation
+lghip<-log(bodyfat$hip)
+lgankle<-log(bodyfat$ankle)
+scatterplotMatrix(~age+weight+height+chest+lghip+lgankle, data=bodyfat, diagonal=list(method="boxplot"))
+## Thats a little bit better as the boxplots are more centred. Logging is not essential as the 
+# the data don't look too bad to begin with.
+fat<-cbind(bodyfat,lghip,lgankle)
 
 # Null Hypothesis:
 # ----------------
@@ -412,6 +456,10 @@ cor(bodyfat_ds[2:7], method="spearman")
 
 # It looks like weight, chest and hip are significantly correlated
 
+## So hip and chest are strongly correlated with each other (r=0.83) and with weight (hip r=0.94; chest r=0.89)
+# I'm going to leave out hip and chest from the model. You could also choose to leave out a different 
+# combination of correlated variables, as long as you justify you reasoning. 
+
 # Check for normality of variables
 shapiro.test <- sapply(bodyfat_ds[2:7], FUN=shapiro.test)
 shapiro.test[2,]
@@ -432,9 +480,9 @@ shapiro.test[2,]
 # Age, weight, chest, hip and ankle are not significant different to normal
 
 # Let's check their correlation using pearson (as variables are normal)
-cor.test(bodyfat$weight, bodyfat$chest) # t = 30.954, df = 248, p-value < 2.2e-16
-cor.test(bodyfat$weight, bodyfat$hip) # t = 40.723, df = 248, p-value < 2.2e-16
-cor.test(bodyfat$chest, bodyfat$hip) # t = 22.981, df = 248, p-value < 2.2e-16
+cor.test(bodyfat$weight, bodyfat$chest) # t = 30.954, df = 248, p-value < 2.2e-16, cor = 0.8912862 
+cor.test(bodyfat$weight, bodyfat$hip) # t = 40.723, df = 248, p-value < 2.2e-16, cor = 0.9326905
+cor.test(bodyfat$chest, bodyfat$hip) # t = 22.981, df = 248, p-value < 2.2e-16, cor = 0.8249076
 
 # So weight, hip and chest are significantly correlated (p < 0.001, df = 248)
 # We can combine these into a single variable ????
@@ -457,7 +505,7 @@ Mult.lm2 <- lm(Perc_bodyfat~age+height+hip, data=bodyfat)
 summary(Mult.lm2)
 # Coefficients:
 #                 Estimate Std. Error t value Pr(>|t|)    
-# (Intercept) -24.29443    9.46301  -2.567   0.0108 *  
+# (Intercept)   -24.29443    9.46301  -2.567   0.0108 *  
 #   age           0.16546    0.02641   6.266 1.65e-09 ***
 #   height       -0.76334    0.13887  -5.497 9.67e-08 ***
 #   hip           0.89674    0.05475  16.377  < 2e-16 ***
