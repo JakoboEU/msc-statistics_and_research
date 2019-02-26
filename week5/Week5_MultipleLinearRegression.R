@@ -151,7 +151,7 @@ summary(Mult.lm3)
 # F-statistic: 27.69 on 2 and 55 DF,  p-value: 4.791e-09
 
 # Results Statement
-# ------------------ß
+# ------------------
 # Body weight and the overall danger posed from other animals where found to be significant
 # predictors of the total amount of time spent asleep (multiple linear regression: R2 = 0.48, df = 55, p < 0.001).
 
