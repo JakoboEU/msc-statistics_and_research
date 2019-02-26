@@ -226,6 +226,72 @@ ggplot(raccoon, aes(x=pop, y=weight)) +
   geom_boxplot() +
   xlab("Location") + ylab("Weight (lbs)")
 
+
+#################
+# Two-way ANOVAs are used when we have a continuous, response variable measured across levels of two different categorical factors. 
+#################
+#################
+# Section 2 (B)
+#################
+raccoon <- read_csv("Raccoon.csv")
+interaction.plot(raccoon$sex, raccoon$pop, raccoon$weight)
+interaction.plot(raccoon$pop, raccoon$sex, raccoon$weight)
+
+# Test for normality
+###
+shapiro.test(raccoon$weight)
+# W = 0.98463, p-value = 0.2983
+#  Significantly different from normal
+
+# Test for homogeneity of variances
+###
+bartlett.test(raccoon$weight, raccoon$sex, raccoon$pop)
+# Bartlett's K-squared = 2.9537, df = 1, p-value = 0.08568
+# Significant difference in variance
+
+output1<-aov(weight~pop+sex, data=raccoon) 
+summary(output1)
+
+#             Df Sum Sq Mean Sq F value Pr(>F)    
+# pop          3   0.53    0.18   0.559  0.644    
+# sex          1  65.83   65.83 206.620 <2e-16 ***
+# Residuals   95  30.27    0.32    
+
+output2<-aov(weight~pop*sex, data=raccoon) 
+summary(output2)
+
+#             Df Sum Sq Mean Sq F value Pr(>F)    
+# pop          3   0.53    0.18   0.553  0.648    
+# sex          1  65.83   65.83 204.501 <2e-16 ***
+# pop:sex      3   0.65    0.22   0.675  0.569    
+# Residuals   92  29.62    0.32                   
+
+anova(output1, output2)
+
+# Analysis of Variance Table
+# 
+# Model 1: weight ~ pop + sex
+# Model 2: weight ~ pop * sex
+#       Res.Df    RSS Df Sum of Sq      F Pr(>F)
+# 1     95 30.268                           
+# 2     92 29.616  3    0.6521 0.6752 0.5694
+
+# So models aren't different, accept first model.
+
+# RESULTS STATEMENT: 
+# ------------------
+# There is no significant association between the location and the weight of the raccoon
+# (p = 0.64, df = 3, mean = 0.18)
+# There is a significant association between the sex and the weight of the raccoon
+# (p < 0.001, df = 1, mean = 65.83)
+ggplot(raccoon, aes(x=sex, y=weight)) + 
+  geom_boxplot() +
+  xlab("Sex") + ylab("Weight (lbs)")
+
+ggplot(raccoon, aes(x=pop, y=weight)) + 
+  geom_boxplot() +
+  xlab("Location") + ylab("Weight (lbs)")
+
 #################
 # Section 3
 #################
@@ -463,7 +529,7 @@ titantic_ds
 titantic_tab <- with(titantic_ds, tapply(Freq, list(Survived, Class), FUN = identity))
 
 # 2 categorical variables (class and survived) so use chi-squared test
-chi.titanic<-chisq.test(titantic_tab) 
+chi.titanic <- chisq.test(titantic_tab) 
 chi.titanic
 # X-squared = 37.988, df = 3, p-value = 2.843e-08
 
