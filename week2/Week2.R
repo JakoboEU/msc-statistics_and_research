@@ -45,7 +45,8 @@ daily.intake <- c(5260, 5470, 5640, 6180, 6390, 6515, 6805, 7515, 7515, 8230, 87
 # recommended energy intake in captivity.
 boxplot(daily.intake) # roughly what is the mean?
 hist(daily.intake) # plot a histogram, does the data look vaguely normally distributed?
-mean(daily.intake) # write down the mean? sd(daily.intake) # write down the standard deviation?
+mean(daily.intake) # write down the mean? 
+sd(daily.intake) # write down the standard deviation?
 # mean = 6753.636
 
 # Test for normality

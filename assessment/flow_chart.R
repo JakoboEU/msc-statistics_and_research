@@ -112,7 +112,7 @@ pairwise.wilcox.test(continuous, categorical_with_3plus_groups)
 # Testing between 2+ categorical variables and one continuous variable:
 # ---------------------------------------------------------------------
 # * ANOVA Family
-# * (week3/Week3.R)
+# * (week3/Week3.R, full_practice/james_richardson.R[Section 2])
 # Two-way ANOVAs are used when we have a continuous, response variable measured across levels of two different categorical factors. 
 # Factors would classically be manipulated factors consisting of different levels (e.g., different quantities of a drug). 
 # The number of subjects measured would be the same for each level of the factor by design.
@@ -137,7 +137,7 @@ anova(anova2, anova3)
 # Testing between 2+ categorical variables and one continuous variable for same subject over time:
 # ------------------------------------------------------------------------------------------------
 # * Repeated measures ANOVA & interaction plots
-# * (week3/Week3.R, full_practice/james_richardson.R[Section 2])
+# * (week3/Week3.R)
 anova4 <- aov(continuous ~ categorical1 * categorical2 + Error(subject_id), data = dataframe)
 summary(anova4)
 
