@@ -186,6 +186,12 @@ plot(linear_regression)
 # * Regression - Multiple Linear Model - more than one response variable
 # * (week4/Week4.R, week5/Week5_MultipleLinearRegression.R, practice4/james_richardson_practice_4.R, full_practice/james_richardson.R[Section 4])
 # Remove strongly correlated variables!
+
+scatterplotMatrix(~cause1+cause2+cause3+cause4, data=dataframe, diagonal=list(method="boxplot"))
+pairs(~cause1+cause2+cause3+cause4, data=dataframe, upper.panel = NULL)
+M<-cor(dataframe[2:6], method="pearson") # create matrix of pearson correlations
+corrplot(M, method="number", type="lower") 
+
 multi.lm <- lm(effect ~ cause1 + cause2 + cause3, data=dataframe) 
 summary(multi.lm)
 # Remove variables that do not explain effect - and re-run model
