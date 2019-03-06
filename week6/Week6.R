@@ -22,7 +22,7 @@ library(vegan)
 # Data:  varespec
 data(varespec)
 
-
+head(varespec)
 # Running the PCA:
 # -----------------
 # Running the ordination in R is simple if you have set up your data well 

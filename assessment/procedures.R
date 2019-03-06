@@ -555,7 +555,7 @@ hist(resid(mod2))
 par(mfrow=c(2,2))
 plot(mod2)
 
-# Report
+# Reportgemo
 # ------
 # Age, weight, and height explained 58% of the variation in body fat (adj Rsq=0.58, 
 # F=115, df= 3,249, p<0.001). There is a significnat positive relationship between body fat and age (t=4.838, p<0.001),
