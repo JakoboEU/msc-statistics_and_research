@@ -67,7 +67,6 @@ s5<-rep(c("long","short","medium","curly"),25)
 s5
 length(s5)
 
-
 # Simulating relationships
 # ------------------------
 # Remember from the testing relationships practical that Y=intercept+(slope*X). 
